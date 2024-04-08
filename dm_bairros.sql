@@ -5,7 +5,7 @@
 CREATE TABLE dm_st_bairros (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL
-);
+)AUTO_INCREMENT = 80000;
 
 /*-----------------insert-----------------------*/
 
