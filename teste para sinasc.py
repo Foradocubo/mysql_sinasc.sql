@@ -180,7 +180,7 @@ for vector in all_vectors:
         values = ', '.join("'" + item + "'" for item in vector)
         
         # Consulta SQL para inserir os dados na tabela
-        sql = f"INSERT INTO dados_sexo VALUES ({values})"
+        sql = f"INSERT INTO ods_dados_sexo VALUES ({values})"
         
         # Executar a consulta
         cursor.execute(sql)
