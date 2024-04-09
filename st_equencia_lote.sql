@@ -1,6 +1,4 @@
-/* 
-
-Executar 3
+/* Executar 3
 
 1- CRIA TABELA PARA ARMAZENAR A SEQUENCIE (MYSQL N POSSI FNC)
 2- Fazer um insert
