@@ -1,7 +1,7 @@
 /* Executar 01 */
 
 
-CREATE TABLE dados_sexo (
+CREATE TABLE ods_dados_sexo (
     sexo VARCHAR(6),
     agua_rasa INT,
     alto_de_pinheiros INT,
