@@ -16,9 +16,9 @@ CREATE TABLE st_dados_sexo (
 /* --------------------------- Insert ----------------------------------- */
 
 
-INSERT INTO st_dados_sexo (BAIRRO, VALOR, SEXO, DATA, bairro_id, st_sequencia_proximo_lote())
+INSERT INTO st_dados_sexo (BAIRRO, VALOR, SEXO, DATA, bairro_id, lote)
 
-SELECT BAIRRO, VALOR, SEXO, DATA, dm_st_bairros.id FROM (
+SELECT BAIRRO, VALOR, SEXO, DATA, dm_st_bairros.id, st_sequencia_proximo_lote() as lote FROM (
 SELECT 'Água Rasa' AS bairro, agua_rasa AS valor, sexo, data FROM ods_dados_sexo 
 UNION ALL
 SELECT 'Alto de Pinheiros' AS bairro, alto_de_pinheiros AS valor, sexo, data FROM ods_dados_sexo

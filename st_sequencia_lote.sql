@@ -22,35 +22,33 @@ CREATE TABLE st_sequencia_lote (
 INSERT INTO st_sequencia_lote (proximo_lote) VALUES (202301);
 
 
-/* 3 criar procedure*/
+/* 3 criar fnc*/
 
 DELIMITER //
 
-CREATE PROCEDURE st_sequencia_proximo_lote()
+CREATE FUNCTION st_sequencia_proximo_lote() RETURNS INT
 BEGIN
     DECLARE proximo_lote INT;
-    
-    -- Iniciar uma transação
-    START TRANSACTION;
-    
-    -- Obter o próximo valor da sequência de lote e travar a linha para garantir a exclusão mútua
-    SELECT proximo_lote INTO proximo_lote FROM st_sequencia_lote FOR UPDATE;
-    
-    -- Atualizar o valor da sequência de lote para o próximo valor
-    UPDATE st_sequencia_lote SET proximo_lote = proximo_lote + 1;
-    
-    -- Inserir um novo registro na tabela sequencia_lote com o próximo valor do lote e a data de criação atual
-    INSERT INTO st_sequencia_lote (proximo_lote) VALUES (proximo_lote + 1);
-    
-    -- Confirmar a transação
-    COMMIT;
-    
+
+    -- Obter o máximo valor atual da sequência de lote
+    SELECT MAX(proximo_lote) INTO proximo_lote FROM st_sequencia_lote;
+
+    -- Se não houver registros na tabela sequencia_lote, definir o próximo valor como 1
+    IF proximo_lote IS NULL THEN
+        SET proximo_lote = 1;
+    END IF;
+
+    -- Incrementar o próximo valor da sequência de lote
+    SET proximo_lote = proximo_lote + 1;
+
+    -- Inserir um novo registro na tabela sequencia_lote com o próximo valor do lote
+    INSERT INTO st_sequencia_lote (proximo_lote) VALUES (proximo_lote);
+
     -- Retornar o próximo valor da sequência de lote
-    SELECT proximo_lote;
+    RETURN proximo_lote;
 END //
 
 DELIMITER ;
-
 
 
 
