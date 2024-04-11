@@ -12,6 +12,7 @@ CREATE TABLE dw_dados_sexo (
 );
 
 
+SET @proximo_lote := dw_sequencia_sexo();
 
-INSERT INTO dw_dados_sexo (SEXO, bairro_id, VALOR, DATA, dw_sequencia_proximo_lote())
-SELECT sexo, bairro_id, valor, data FROM st_dados_sexo
+INSERT INTO dw_dados_sexo (SEXO, bairro_id, VALOR, DATA, lote)
+SELECT sexo, bairro_id, valor, data, @proximo_lote FROM st_dados_sexo

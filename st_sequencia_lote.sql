@@ -26,16 +26,16 @@ INSERT INTO st_sequencia_lote (proximo_lote) VALUES (202301);
 
 DELIMITER //
 
-CREATE FUNCTION st_sequencia_proximo_lote() RETURNS INT
+CREATE FUNCTION st_sequencia_sexo() RETURNS INT
 BEGIN
     DECLARE maior_lote INT;
 
     -- Obter o máximo valor atual da sequência de lote
-    SELECT MAX(proximo_lote) INTO maior_lote FROM st_sequencia_lote;
+    SELECT MAX(proximo_lote) INTO maior_lote FROM st_sequencia_sexo;
 
         -- Se não houver registros na tabela sequencia_lote, definir o próximo valor como 1
     IF maior_lote IS NULL THEN
-        SET maior_lote = 20240001;
+        SET maior_lote = 1;
     END IF;
 
 
@@ -43,7 +43,7 @@ BEGIN
     SET maior_lote = maior_lote + 1;
 
     -- Inserir um novo registro na tabela sequencia_lote com o próximo valor do lote
-    INSERT INTO st_sequencia_lote (proximo_lote) VALUES (maior_lote);
+    INSERT INTO st_sequencia_sexo (proximo_lote) VALUES (maior_lote);
 
     -- Retornar o próximo valor da sequência de lote
     RETURN maior_lote;

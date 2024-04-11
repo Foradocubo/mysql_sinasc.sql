@@ -17,60 +17,33 @@ CREATE TABLE dw_sequencia_lote (
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-/* 2 fazer o insert*/
-
-INSERT INTO dw_sequencia_lote (proximo_lote) VALUES (202301);
 
 
-/* 3 criar procedure*/
+/* 3 criar fnc*/
 
 DELIMITER //
 
-CREATE PROCEDURE dw_sequencia_proximo_lote()
+CREATE FUNCTION dw_sequencia_sexo() RETURNS INT
 BEGIN
-    DECLARE proximo_lote INT;
-    
-    -- Iniciar uma transação
-    START TRANSACTION;
-    
-    -- Obter o próximo valor da sequência de lote e travar a linha para garantir a exclusão mútua
-    SELECT proximo_lote INTO proximo_lote FROM st_sequencia_lote FOR UPDATE;
-    
-    -- Atualizar o valor da sequência de lote para o próximo valor
-    UPDATE st_sequencia_lote SET proximo_lote = proximo_lote + 1;
-    
-    -- Inserir um novo registro na tabela sequencia_lote com o próximo valor do lote e a data de criação atual
-    INSERT INTO st_sequencia_lote (proximo_lote) VALUES (proximo_lote + 1);
-    
-    -- Confirmar a transação
-    COMMIT;
-    
+    DECLARE maior_lote INT;
+
+    -- Obter o máximo valor atual da sequência de lote
+    SELECT MAX(proximo_lote) INTO maior_lote FROM st_sequencia_lote;
+
+        -- Se não houver registros na tabela sequencia_lote, definir o próximo valor como 1
+    IF maior_lote IS NULL THEN
+        SET maior_lote = 100000;
+    END IF;
+
+
+    -- Incrementar o próximo valor da sequência de lote
+    SET maior_lote = maior_lote + 1;
+
+    -- Inserir um novo registro na tabela sequencia_lote com o próximo valor do lote
+    INSERT INTO dw_sequencia_lote (proximo_lote) VALUES (maior_lote);
+
     -- Retornar o próximo valor da sequência de lote
-    SELECT proximo_lote;
+    RETURN maior_lote;
 END //
 
 DELIMITER ;
-
-
-
-
-
-/* 4 executar a call  */
-
-
-call dw_sequencia_proximo_lote()
-
-or 
-
-
- Select dw_sequencia_proximo_lote() as proximo_lote
-
-
-or 
-
-SET @proximo_lote := obter_proximo_lote();
-
--- Inserir os dados na tabela principal e atribuir o valor do lote
-INSERT INTO tabela_principal (lote, nome, idade)
-SELECT @proximo_lote AS lote, nome, idade
-FROM dados_a_inserir;
