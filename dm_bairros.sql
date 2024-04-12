@@ -2,14 +2,14 @@
 
 /*-----------------Criar Tabela-----------------------*/
 
-CREATE TABLE dm_st_bairros (
+CREATE TABLE dm_bairros (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL
 )AUTO_INCREMENT = 80000;
 
 /*-----------------insert-----------------------*/
 
-INSERT INTO dm_st_bairros (nome) VALUES
+INSERT INTO dm_bairros (nome) VALUES
 ('Água Rasa'),
 ('Alto de Pinheiros'),
 ('Anhanguera'),

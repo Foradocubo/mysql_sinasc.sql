@@ -8,7 +8,7 @@ CREATE TABLE dw_dados_sexo (
     valor INT NOT NULL,
     data date,
     lote int not null,
-    FOREIGN KEY (bairro_id) REFERENCES dm_st_bairros(id)
+    FOREIGN KEY (bairro_id) REFERENCES dm_bairros(id)
 );
 
 

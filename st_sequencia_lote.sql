@@ -11,18 +11,13 @@
 
 /* 1  criar tabela*/
 
-CREATE TABLE st_sequencia_lote (
+CREATE TABLE st_sequencia_sexo (
     id INT AUTO_INCREMENT PRIMARY KEY,
     proximo_lote INT,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-/* 2 fazer o insert*/
-
-INSERT INTO st_sequencia_lote (proximo_lote) VALUES (202301);
-
-
-/* 3 criar fnc*/
+/* 2 criar fnc*/
 
 DELIMITER //
 
@@ -37,7 +32,6 @@ BEGIN
     IF maior_lote IS NULL THEN
         SET maior_lote = 1;
     END IF;
-
 
     -- Incrementar o próximo valor da sequência de lote
     SET maior_lote = maior_lote + 1;

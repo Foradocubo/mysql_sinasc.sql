@@ -9,18 +9,18 @@ CREATE TABLE st_dados_sexo (
     data date,
     bairro_id INT NOT NULL,
     lote int not null,
-    FOREIGN KEY (bairro_id) REFERENCES dm_st_bairros(id)
+    FOREIGN KEY (bairro_id) REFERENCES dm_bairros(id)
     
 );
 
 /* --------------------------- Insert ----------------------------------- */
 
-SET @proximo_lote := st_sequencia_proximo_lote();
+SET @proximo_lote :=st_sequencia_sexo();
 
 
 INSERT INTO st_dados_sexo (BAIRRO, VALOR, SEXO, DATA, bairro_id, lote)
 
-SELECT BAIRRO, VALOR, SEXO, DATA, dm_st_bairros.id,  @proximo_lote as lote FROM (
+SELECT BAIRRO, VALOR, SEXO, DATA, dm_bairros.id,  @proximo_lote as lote FROM (
 SELECT 'Água Rasa' AS bairro, agua_rasa AS valor, sexo, data FROM ods_dados_sexo 
 UNION ALL
 SELECT 'Alto de Pinheiros' AS bairro, alto_de_pinheiros AS valor, sexo, data FROM ods_dados_sexo
@@ -214,4 +214,4 @@ UNION ALL
 SELECT 'Vila Sônia' AS bairro, vila_sonia AS valor, sexo, data FROM ods_dados_sexo
 UNION ALL
 SELECT 'Ignorado' AS bairro, ignorado AS valor, sexo, data FROM ods_dados_sexo
-) dados_sexo JOIN  dm_st_bairros ON  dados_sexo.BAIRRO = dm_st_bairros.NOME;
+) dados_sexo JOIN  dm_bairros ON  dados_sexo.BAIRRO = dm_bairros.NOME;
