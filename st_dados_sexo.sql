@@ -15,7 +15,7 @@ CREATE TABLE st_dados_sexo (
 
 /* --------------------------- Insert ----------------------------------- */
 
-SET @proximo_lote :=st_sequencia_sexo();
+SET @proximo_lote :=sinasc_controle('stg', 'st_dados_sexo');
 
 
 INSERT INTO st_dados_sexo (BAIRRO, VALOR, SEXO, DATA, bairro_id, lote)
